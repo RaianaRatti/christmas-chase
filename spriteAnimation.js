@@ -3,7 +3,7 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 const width = canvas.width = 510;
 const height = canvas.height = 700;
-canvas.style.marginTop = window.innerHeight / 2 - height / 2 + "px";
+// canvas.style.marginTop = window.innerHeight / 2 - height / 2 + "px";
 
 /* ========== GAME VARIABLES ========== */
 let keys = {
