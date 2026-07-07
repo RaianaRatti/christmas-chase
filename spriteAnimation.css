@@ -1,0 +1,11 @@
+html, body {
+    background: #111; /* black background */
+}
+
+canvas {
+    background: black; /* rgb(117,117,117); /* gray background on center rectangle (canvas) */
+    display: block;
+    margin: 0 auto; /* centers canvas horizontally */
+    border: solid 6px #AAA; /* gray border */
+    border-radius: 10px; /* rounded corners of border */
+}
