@@ -6,7 +6,7 @@ A side-scrolling browser game built on the HTML5 Canvas API. Run, jump, and dodg
 
 🎥 Watch the demo video!
 
-https://github.com/user-attachments/assets/b84d83d0-2499-4bf5-96ba-fab5f30fb5cc
+https://github.com/user-attachments/assets/f8bd47f0-af34-4467-9c33-fe5f293599ef
 
 ## Features
 
