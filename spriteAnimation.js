@@ -16,7 +16,7 @@ let gameStarted = false;
 let gameOver = false;
 let isJumping = false;
 let isFalling = false;
-let velocity = 15;
+let velocity = 20;
 let gravity = 0.98;
 let currentState = "breathe";
 let previousState = currentState;
@@ -31,7 +31,7 @@ const maxObstacleHeight = 0;
 const minObstacleHeight = 300;
 const maxObstacleVelocityX = 11;
 const minObstacleVelocityX = 7;
-const original_velocity = 15;
+const original_velocity = 20;
 const original_gravity = 0.98;
 const offset = 7;
 let xPosOnCanvas = 100;
@@ -49,6 +49,16 @@ let obstacleVelocityY = 0;
 let obstacleVelocityX = Math.random() * (maxObstacleVelocityX - minObstacleVelocityX + 1) + minObstacleVelocityX;
 let obstacleX = width;
 let obstacleY = Math.random() * (minObstacleHeight - maxObstacleHeight + 1) + maxObstacleHeight;
+
+let treeX = width + 200;
+let treeY = 500;
+let treeActive = false;
+let treeSpawnTimer = 0;
+const treeWidth = 85;
+const treeHeight = 130;
+const treeVelocityX = 10;
+const treeMinSpawnDelay = 150;
+const treeMaxSpawnDelay = 250;
 
 let scale = 1.2;
 
@@ -77,6 +87,9 @@ obstacleImage.src = "images/snowballObstacle.png";
 
 const playButtonImage = new Image();
 playButtonImage.src = "images/playButton.png";
+
+const christmasTreeImage = new Image();
+christmasTreeImage.src = "images/christmasTree.png";
 
 /* ========== FUNCTIONS ========== */
 
@@ -231,6 +244,28 @@ function inGameCreatingAndMovingObstacle() {
   context.drawImage(obstacleImage, obstacleX, obstacleY, obstacleWidth, obstacleHeight);
 }
 
+function inGameCreatingAndMovingTree() {
+  if (!treeActive) {
+    if (treeSpawnTimer > 0) {
+      treeSpawnTimer--;
+      return;
+    }
+
+    treeActive = true;
+    treeX = width + 40 + Math.random() * 80;
+    return;
+  }
+
+  treeX -= treeVelocityX;
+
+  if (treeX + treeWidth < 0) {
+    treeActive = false;
+    treeSpawnTimer = Math.floor(Math.random() * (treeMaxSpawnDelay - treeMinSpawnDelay + 1)) + treeMinSpawnDelay;
+    return;
+  }
+
+  context.drawImage(christmasTreeImage, treeX, treeY, treeWidth, treeHeight);
+}
 
 function inGameSpriteJump() {
   if (isJumping && !isFalling && velocity > 0) {
@@ -264,6 +299,35 @@ function inGameCheckingForCollision() {
   ) {
     endgame();
   }
+
+  if (treeActive) {
+    const feetLeft = xPosOnCanvas + 24;
+    const feetRight = characterRight - 24;
+    const feetTop = characterBottom - 24;
+    const feetBottom = characterBottom - 4;
+    const headLeft = xPosOnCanvas + 28;
+    const headRight = characterRight - 28;
+    const headTop = yPosOnCanvas + 8;
+    const headBottom = yPosOnCanvas + 38;
+
+    if (
+      feetRight > treeX + 12 &&
+      feetLeft < treeX + treeWidth - 14 &&
+      feetBottom > treeY + 10 &&
+      feetTop < treeY + treeHeight - 12
+    ) {
+      endgame();
+    }
+
+    if (
+      headRight > treeX + 12 &&
+      headLeft < treeX + treeWidth - 14 &&
+      headBottom > treeY + 10 &&
+      headTop < treeY + treeHeight - 12
+    ) {
+      endgame();
+    }
+  }
 }
 
 function animate() {
@@ -274,6 +338,7 @@ function animate() {
     movingBackgroundInfinitely();
     inGameCreatingAndMovingSprite();
     inGameCreatingAndMovingObstacle();
+    inGameCreatingAndMovingTree();
     inGameSpriteJump();
     inGameCheckingForCollision();
   } else {
@@ -292,6 +357,9 @@ function animate() {
       state.spriteWidth * state.scale, state.spriteHeight * state.scale
     );
     context.drawImage(obstacleImage, obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+    if (treeActive) {
+      context.drawImage(christmasTreeImage, treeX, treeY, treeWidth, treeHeight);
+    }
   }
 }
 
@@ -321,6 +389,10 @@ function resetGame() {
   obstacleX = width;
   obstacleY = Math.random() * (minObstacleHeight - maxObstacleHeight + 1) + maxObstacleHeight;
   obstacleVelocityY = 0;
+  treeX = width + 200;
+  treeY = 500;
+  treeActive = false;
+  treeSpawnTimer = 0;
   velocity = original_velocity;
   gravity = original_gravity;
   xPosOnCanvas = 100;

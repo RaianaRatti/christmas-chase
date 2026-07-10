@@ -1,11 +1,24 @@
 html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
     background: #111; /* black background */
+    overflow: hidden;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 canvas {
     background: black; /* rgb(117,117,117); /* gray background on center rectangle (canvas) */
     display: block;
-    margin: 0 auto; /* centers canvas horizontally */
     border: solid 6px #AAA; /* gray border */
     border-radius: 10px; /* rounded corners of border */
+    max-width: 100vw;
+    max-height: 100vh;
+    width: auto;
+    height: auto;
 }
