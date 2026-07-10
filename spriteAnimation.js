@@ -53,12 +53,13 @@ let obstacleY = Math.random() * (minObstacleHeight - maxObstacleHeight + 1) + ma
 let treeX = width + 200;
 let treeY = 500;
 let treeActive = false;
-let treeSpawnTimer = 0;
+let treeSpawnTimer = 80;
 const treeWidth = 85;
 const treeHeight = 130;
 const treeVelocityX = 10;
 const treeMinSpawnDelay = 150;
 const treeMaxSpawnDelay = 250;
+const treeInitialSpawnDelay = 80;
 
 let scale = 1.2;
 
@@ -392,7 +393,7 @@ function resetGame() {
   treeX = width + 200;
   treeY = 500;
   treeActive = false;
-  treeSpawnTimer = 0;
+  treeSpawnTimer = treeInitialSpawnDelay;
   velocity = original_velocity;
   gravity = original_gravity;
   xPosOnCanvas = 100;
